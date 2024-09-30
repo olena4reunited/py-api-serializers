@@ -5,9 +5,7 @@ from cinema.models import (
     CinemaHall,
     Genre,
     Actor,
-    MovieSession,
-    Order,
-    Ticket
+    MovieSession
 )
 
 
@@ -24,7 +22,7 @@ class GenreSerializer(serializers.ModelSerializer):
 
 
 class ActorSerializer(serializers.ModelSerializer):
-    full_name = serializers.SerializerMethodField()
+    full_name = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Actor
@@ -49,8 +47,8 @@ class MovieSerializer(serializers.ModelSerializer):
 
 
 class MovieListSerializer(MovieSerializer):
-    genres = serializers.StringRelatedField(many=True)
-    actors = serializers.StringRelatedField(many=True)
+    genres = serializers.StringRelatedField(many=True, read_only=True)
+    actors = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Movie
@@ -87,12 +85,17 @@ class MovieSessionSerializer(serializers.ModelSerializer):
 
 
 class MovieSessionListSerializer(MovieSessionSerializer):
-    movie_title = serializers.CharField(source="movie.title")
+    movie_title = serializers.CharField(
+        source="movie.title",
+        read_only=True
+    )
     cinema_hall_name = serializers.StringRelatedField(
-        source="cinema_hall.name"
+        source="cinema_hall.name",
+        read_only=True
     )
     cinema_hall_capacity = serializers.IntegerField(
-        source="cinema_hall.capacity"
+        source="cinema_hall.capacity",
+        read_only=True
     )
 
     class Meta:
@@ -113,15 +116,3 @@ class MovieSessionRetrieveSerializer(MovieSessionSerializer):
     class Meta:
         model = MovieSession
         fields = ["id", "show_time", "movie", "cinema_hall"]
-
-
-class OrderSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Order
-        fields = ["id", "created_at", "user"]
-
-
-class TicketSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Ticket
-        fields = ["id", "movie_session", "order", "row", "seat"]

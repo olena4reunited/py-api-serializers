@@ -5,16 +5,13 @@ from cinema.models import (
     CinemaHall,
     Genre,
     Actor,
-    Order,
-    Ticket, MovieSession
+    MovieSession
 )
 from cinema.serializers import (
     MovieSerializer,
     CinemaHallSerializer,
     GenreSerializer,
     ActorSerializer,
-    OrderSerializer,
-    TicketSerializer,
     MovieListSerializer,
     MovieRetrieveSerializer,
     MovieSessionSerializer,
@@ -69,13 +66,3 @@ class GenreViewSet(viewsets.ModelViewSet):
 class ActorViewSet(viewsets.ModelViewSet):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
-
-
-class OrderViewSet(viewsets.ModelViewSet):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-
-
-class TicketViewSet(viewsets.ModelViewSet):
-    queryset = Ticket.objects.all()
-    serializer_class = TicketSerializer
