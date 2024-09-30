@@ -110,7 +110,6 @@ class MovieSessionRetrieveSerializer(MovieSessionSerializer):
     movie = MovieListSerializer()
     cinema_hall = CinemaHallSerializer()
 
-
     class Meta:
         model = MovieSession
         fields = ["id", "show_time", "movie", "cinema_hall"]
@@ -126,4 +125,3 @@ class TicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
         fields = ["id", "movie_session", "order", "row", "seat"]
-
